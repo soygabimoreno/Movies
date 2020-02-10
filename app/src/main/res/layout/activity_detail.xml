@@ -55,7 +55,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="Lorem ipsum"/>
 
-            <TextView
+            <soy.gabimoreno.movies.ui.MovieDetailInfoView
                 android:id="@+id/tvInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
