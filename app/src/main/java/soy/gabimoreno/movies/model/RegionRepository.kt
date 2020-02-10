@@ -11,7 +11,7 @@ class RegionRepository(activity: Activity) {
         private const val DEFAULT_REGION = "US"
     }
 
-    private val locationDataSource: LocationDataSource = PlayServicesLocationDatasource(activity)
+    private val locationDataSource: LocationDataSource = PlayServicesLocationDataSource(activity)
     private val coarsePermissionChecker = PermissionChecker(activity, ACCESS_COARSE_LOCATION)
     private val geocoder = Geocoder(activity)
 

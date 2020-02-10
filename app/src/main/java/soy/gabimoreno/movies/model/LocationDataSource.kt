@@ -10,7 +10,7 @@ interface LocationDataSource {
     suspend fun findLastLocation(): Location?
 }
 
-class PlayServicesLocationDatasource(activity: Activity) : LocationDataSource {
+class PlayServicesLocationDataSource(activity: Activity) : LocationDataSource {
 
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
 
@@ -21,5 +21,12 @@ class PlayServicesLocationDatasource(activity: Activity) : LocationDataSource {
                     continuation.resume(it.result)
                 }
         }
+    }
+}
+
+class NotAvailableLocationDataSource : LocationDataSource {
+
+    override suspend fun findLastLocation(): Location? {
+        throw UnsupportedOperationException("This operation cannot be done in this device")
     }
 }
