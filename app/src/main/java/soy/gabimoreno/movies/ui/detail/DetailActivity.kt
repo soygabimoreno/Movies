@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.ui
+package soy.gabimoreno.movies.ui.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_detail.*
 import soy.gabimoreno.movies.R
 import soy.gabimoreno.movies.model.Movie
+import soy.gabimoreno.movies.ui.common.loadUrl
 
 class DetailActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.ui
+package soy.gabimoreno.movies.ui.common
 
 import android.app.Activity
 import android.content.Context
@@ -27,4 +27,12 @@ inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): In
 
 inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit) {
     startActivity(intentFor<T>(body))
+}
+
+fun View.visible() {
+    visibility = View.VISIBLE
+}
+
+fun View.gone() {
+    visibility = View.GONE
 }

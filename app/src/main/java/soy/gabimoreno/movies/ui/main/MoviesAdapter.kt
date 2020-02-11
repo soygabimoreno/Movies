@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.ui
+package soy.gabimoreno.movies.ui.main
 
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_movie.view.*
 import soy.gabimoreno.movies.R
 import soy.gabimoreno.movies.model.Movie
+import soy.gabimoreno.movies.ui.common.inflate
+import soy.gabimoreno.movies.ui.common.loadUrl
 import kotlin.properties.Delegates
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :

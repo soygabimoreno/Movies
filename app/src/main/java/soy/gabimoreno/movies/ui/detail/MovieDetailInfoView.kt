@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.ui
+package soy.gabimoreno.movies.ui.detail
 
 import android.content.Context
 import android.util.AttributeSet
