@@ -36,13 +36,8 @@ class MainActivity :
         super.onDestroy()
     }
 
-    override fun showProgress() {
-        pb.visible()
-    }
-
-    override fun hideProgress() {
-        pb.gone()
-    }
+    override fun showProgress() = pb.visible()
+    override fun hideProgress() = pb.gone()
 
     override fun updateData(movies: List<Movie>) {
         adapter.movies = movies
