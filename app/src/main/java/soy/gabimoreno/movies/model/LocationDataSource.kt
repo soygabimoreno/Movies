@@ -1,6 +1,7 @@
 package soy.gabimoreno.movies.model
 
 import android.app.Activity
+import android.app.Application
 import android.location.Location
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -10,9 +11,9 @@ interface LocationDataSource {
     suspend fun findLastLocation(): Location?
 }
 
-class PlayServicesLocationDataSource(activity: Activity) : LocationDataSource {
+class PlayServicesLocationDataSource(application: Application) : LocationDataSource {
 
-    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
     override suspend fun findLastLocation(): Location? {
         return suspendCancellableCoroutine { continuation ->
