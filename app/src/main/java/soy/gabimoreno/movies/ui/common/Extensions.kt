@@ -36,3 +36,11 @@ fun View.visible() {
 fun View.gone() {
     visibility = View.GONE
 }
+
+fun View.setVisibleOrGone(visible: Boolean) {
+    if (visible) {
+        visible()
+    } else {
+        gone()
+    }
+}
