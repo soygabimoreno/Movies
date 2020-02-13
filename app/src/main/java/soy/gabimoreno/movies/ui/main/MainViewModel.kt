@@ -4,18 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.launch
-import soy.gabimoreno.movies.model.Movie
-import soy.gabimoreno.movies.model.MoviesRepository
-import soy.gabimoreno.movies.ui.common.Event
-import soy.gabimoreno.movies.ui.common.Scope
+import soy.gabimoreno.movies.model.db.Movie
+import soy.gabimoreno.movies.model.server.MoviesRepository
+import soy.gabimoreno.movies.common.Event
+import soy.gabimoreno.movies.common.Scope
+import soy.gabimoreno.movies.common.ScopedViewModel
 
 class MainViewModel(
     private val moviesRepository: MoviesRepository
-) : ViewModel(), Scope by Scope.Impl() {
-
-    init {
-        initScope()
-    }
+) : ScopedViewModel() {
 
     sealed class UiModel {
         object RequestLocationPermission : UiModel()
@@ -36,17 +33,12 @@ class MainViewModel(
     fun onCoarsePermissionRequested() {
         launch {
             _model.value = UiModel.Loading
-            _model.value = UiModel.Content(moviesRepository.findPopularMovies().results)
+            _model.value = UiModel.Content(moviesRepository.findPopularMovies())
         }
     }
 
     private fun refresh() {
         _model.value = UiModel.RequestLocationPermission
-    }
-
-    override fun onCleared() {
-        cancelScope()
-        super.onCleared()
     }
 
     fun onMovieClicked(movie: Movie) {

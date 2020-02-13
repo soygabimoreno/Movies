@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.model
+package soy.gabimoreno.movies.model.server
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient

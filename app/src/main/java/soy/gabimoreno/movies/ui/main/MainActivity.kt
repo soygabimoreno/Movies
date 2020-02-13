@@ -5,13 +5,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
+import soy.gabimoreno.movies.App
+import soy.gabimoreno.movies.PermissionRequester
 import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.model.Movie
-import soy.gabimoreno.movies.model.MoviesRepository
-import soy.gabimoreno.movies.ui.common.Event
-import soy.gabimoreno.movies.ui.common.getViewModel
-import soy.gabimoreno.movies.ui.common.setVisibleOrGone
-import soy.gabimoreno.movies.ui.common.startActivity
+import soy.gabimoreno.movies.common.*
+import soy.gabimoreno.movies.model.db.Movie
+import soy.gabimoreno.movies.model.server.MoviesRepository
 import soy.gabimoreno.movies.ui.detail.DetailActivity
 import soy.gabimoreno.movies.ui.main.MainViewModel.UiModel
 import soy.gabimoreno.movies.ui.main.MainViewModel.UiModel.Loading
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = getViewModel { MainViewModel(MoviesRepository(application)) }
+        viewModel = getViewModel { MainViewModel(MoviesRepository(app)) }
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         rv.adapter = adapter
 
@@ -37,7 +36,8 @@ class MainActivity : AppCompatActivity() {
         event.getContentIfNotHandled()?.let {
             val movie = it
             startActivity<DetailActivity> {
-                putExtra(DetailActivity.MOVIE, movie)
+                val movieId = movie.id
+                putExtra(DetailActivity.MOVIE_ID, movieId)
             }
         }
     }

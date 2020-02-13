@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.ui.common
+package soy.gabimoreno.movies.common
 
 open class Event<out T>(private val content: T) {
 

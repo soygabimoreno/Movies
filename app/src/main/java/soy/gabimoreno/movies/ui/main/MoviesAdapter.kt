@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_movie.view.*
 import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.model.Movie
-import soy.gabimoreno.movies.ui.common.inflate
-import soy.gabimoreno.movies.ui.common.loadUrl
+import soy.gabimoreno.movies.model.db.Movie
+import soy.gabimoreno.movies.common.inflate
+import soy.gabimoreno.movies.common.loadUrl
 import kotlin.properties.Delegates
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :

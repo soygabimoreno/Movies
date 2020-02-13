@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.model
+package soy.gabimoreno.movies.model.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -6,13 +6,13 @@ import kotlinx.android.parcel.Parcelize
 
 data class MovieDbResult(
     val page: Int,
-    val results: List<Movie>,
+    val results: List<ServerMovie>,
     @SerializedName("total_pages") val totalPages: Int,
     @SerializedName("total_results") val totalResults: Int
 )
 
 @Parcelize
-data class Movie(
+data class ServerMovie(
     val adult: Boolean,
     @SerializedName("backdrop_path") val backdropPath: String?,
     @SerializedName("genre_ids") val genreIds: List<Int>,

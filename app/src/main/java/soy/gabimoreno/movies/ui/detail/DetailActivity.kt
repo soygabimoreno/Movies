@@ -6,14 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_detail.*
 import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.model.Movie
-import soy.gabimoreno.movies.ui.common.getViewModel
-import soy.gabimoreno.movies.ui.common.loadUrl
+import soy.gabimoreno.movies.model.server.MoviesRepository
+import soy.gabimoreno.movies.common.app
+import soy.gabimoreno.movies.common.getViewModel
+import soy.gabimoreno.movies.common.loadUrl
 
 class DetailActivity : AppCompatActivity() {
 
     companion object {
-        const val MOVIE = "DetailActivity:movie"
+        const val MOVIE_ID = "DetailActivity:movieId"
     }
 
     private lateinit var viewModel: DetailViewModel
@@ -22,10 +23,9 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        val movie = intent.getParcelableExtra<Movie>(MOVIE)
-            ?: throw (IllegalStateException("Movie not found"))
+        val movieId = intent.getIntExtra(MOVIE_ID, -1)
 
-        viewModel = getViewModel { DetailViewModel(movie) }
+        viewModel = getViewModel { DetailViewModel(movieId, MoviesRepository(app)) }
         viewModel.model.observe(this, Observer(::updateUi))
     }
 

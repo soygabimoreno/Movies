@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.ui.common
+package soy.gabimoreno.movies.common
 
 import android.app.Activity
 import android.content.Context
@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import soy.gabimoreno.movies.App
 
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -56,3 +57,6 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(crossinline fac
     }
     return ViewModelProviders.of(this, vmFactory)[T::class.java]
 }
+
+val Context.app: App
+    get() = applicationContext as App

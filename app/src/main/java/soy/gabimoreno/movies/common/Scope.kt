@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.ui.common
+package soy.gabimoreno.movies.common
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

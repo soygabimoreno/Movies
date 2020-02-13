@@ -1,8 +1,9 @@
-package soy.gabimoreno.movies.model
+package soy.gabimoreno.movies.model.server
 
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
+import soy.gabimoreno.movies.model.server.MovieDbResult
 
 interface TheMovieDbService {
 

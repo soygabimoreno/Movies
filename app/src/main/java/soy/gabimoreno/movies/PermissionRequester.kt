@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.ui.main
+package soy.gabimoreno.movies
 
 import android.app.Activity
 import com.karumi.dexter.Dexter
