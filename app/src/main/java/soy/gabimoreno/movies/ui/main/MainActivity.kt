@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import soy.gabimoreno.movies.R
+import soy.gabimoreno.movies.model.Movie
 import soy.gabimoreno.movies.model.MoviesRepository
+import soy.gabimoreno.movies.ui.common.Event
 import soy.gabimoreno.movies.ui.common.getViewModel
 import soy.gabimoreno.movies.ui.common.setVisibleOrGone
 import soy.gabimoreno.movies.ui.common.startActivity
@@ -28,17 +30,22 @@ class MainActivity : AppCompatActivity() {
         rv.adapter = adapter
 
         viewModel.model.observe(this, Observer(::updateUi))
+        viewModel.navigation.observe(this, Observer(::navigate))
+    }
+
+    private fun navigate(event: Event<Movie>) {
+        event.getContentIfNotHandled()?.let {
+            val movie = it
+            startActivity<DetailActivity> {
+                putExtra(DetailActivity.MOVIE, movie)
+            }
+        }
     }
 
     private fun updateUi(model: UiModel) {
         pb.setVisibleOrGone(model == Loading)
         when (model) {
             is UiModel.Content -> adapter.movies = model.movies
-            is UiModel.Navigation -> {
-                startActivity<DetailActivity> {
-                    putExtra(DetailActivity.MOVIE, model.movie)
-                }
-            }
             UiModel.RequestLocationPermission -> coarsePermissionRequester.request {
                 viewModel.onCoarsePermissionRequested()
             }

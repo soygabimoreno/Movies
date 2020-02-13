@@ -6,17 +6,21 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.launch
 import soy.gabimoreno.movies.model.Movie
 import soy.gabimoreno.movies.model.MoviesRepository
+import soy.gabimoreno.movies.ui.common.Event
 import soy.gabimoreno.movies.ui.common.Scope
 
 class MainViewModel(
     private val moviesRepository: MoviesRepository
 ) : ViewModel(), Scope by Scope.Impl() {
 
+    init {
+        initScope()
+    }
+
     sealed class UiModel {
         object RequestLocationPermission : UiModel()
         object Loading : UiModel()
         class Content(val movies: List<Movie>) : UiModel()
-        class Navigation(val movie: Movie) : UiModel()
     }
 
     private val _model = MutableLiveData<UiModel>()
@@ -26,9 +30,8 @@ class MainViewModel(
             return _model
         }
 
-    init {
-        initScope()
-    }
+    private val _navigation = MutableLiveData<Event<Movie>>()
+    val navigation: LiveData<Event<Movie>> = _navigation
 
     fun onCoarsePermissionRequested() {
         launch {
@@ -47,6 +50,6 @@ class MainViewModel(
     }
 
     fun onMovieClicked(movie: Movie) {
-        _model.value = UiModel.Navigation(movie)
+        _navigation.value = Event(movie)
     }
 }
