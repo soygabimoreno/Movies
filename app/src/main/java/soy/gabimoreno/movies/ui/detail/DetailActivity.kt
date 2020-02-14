@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_detail.*
 import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.model.server.MoviesRepository
 import soy.gabimoreno.movies.common.app
 import soy.gabimoreno.movies.common.getViewModel
 import soy.gabimoreno.movies.common.loadUrl
+import soy.gabimoreno.movies.model.server.MoviesRepository
 
 class DetailActivity : AppCompatActivity() {
 
@@ -27,6 +27,14 @@ class DetailActivity : AppCompatActivity() {
 
         viewModel = getViewModel { DetailViewModel(movieId, MoviesRepository(app)) }
         viewModel.model.observe(this, Observer(::updateUi))
+
+        initFab()
+    }
+
+    private fun initFab() {
+        fab.setOnClickListener {
+            viewModel.onFavoriteClicked()
+        }
     }
 
     private fun updateUi(model: DetailViewModel.UiModel) = with(model.movie) {
@@ -35,5 +43,8 @@ class DetailActivity : AppCompatActivity() {
         iv.loadUrl("https://image.tmdb.org/t/p/w780$background")
         tvSummary.text = overview
         tvInfo.setMovie(this)
+
+        val iconResId = if (favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+        fab.setImageDrawable(getDrawable(iconResId))
     }
 }
