@@ -17,7 +17,7 @@ class DetailActivity : AppCompatActivity() {
         const val MOVIE_ID = "DetailActivity:movieId"
     }
 
-    private lateinit var viewModel: DetailViewModel
+    private lateinit var vm: DetailViewModel
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +25,15 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
         val movieId = intent.getIntExtra(MOVIE_ID, -1)
 
-        viewModel = getViewModel { DetailViewModel(movieId, MoviesRepository(app)) }
-        viewModel.model.observe(this, Observer(::updateUi))
+        vm = getViewModel { DetailViewModel(movieId, MoviesRepository(app)) }
+        vm.model.observe(this, Observer(::updateUi))
 
         initFab()
     }
 
     private fun initFab() {
         fab.setOnClickListener {
-            viewModel.onFavoriteClicked()
+            vm.onFavoriteClicked()
         }
     }
 

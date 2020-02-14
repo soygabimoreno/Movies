@@ -21,6 +21,12 @@ class DetailViewModel(
             return _model
         }
 
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
+
+    private val _overview = MutableLiveData<String>()
+    val overview: LiveData<String> = _overview
+
     private fun findMovie() = launch {
         _model.value = UiModel(moviesRepository.findById(movieId))
     }
