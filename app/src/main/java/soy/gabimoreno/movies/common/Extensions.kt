@@ -9,12 +9,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import soy.gabimoreno.movies.App
+import soy.gabimoreno.movies.R
+import soy.gabimoreno.movies.model.db.Movie
+import soy.gabimoreno.movies.ui.detail.MovieDetailInfoView
 
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

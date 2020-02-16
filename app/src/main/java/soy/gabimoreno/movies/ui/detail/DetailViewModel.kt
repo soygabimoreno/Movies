@@ -12,14 +12,8 @@ class DetailViewModel(
     private val moviesRepository: MoviesRepository
 ) : ScopedViewModel() {
 
-    class UiModel(val movie: Movie)
-
-    private val _model = MutableLiveData<UiModel>()
-    val model: LiveData<UiModel>
-        get() {
-            if (_model.value == null) findMovie()
-            return _model
-        }
+    private val _movie = MutableLiveData<Movie>()
+    val movie: LiveData<Movie> = _movie
 
     private val _title = MutableLiveData<String>()
     val title: LiveData<String> = _title
@@ -27,15 +21,37 @@ class DetailViewModel(
     private val _overview = MutableLiveData<String>()
     val overview: LiveData<String> = _overview
 
-    private fun findMovie() = launch {
-        _model.value = UiModel(moviesRepository.findById(movieId))
+    private val _url = MutableLiveData<String>()
+    val url: LiveData<String> = _url
+
+    private val _favorite = MutableLiveData<Boolean>()
+    val favorite: LiveData<Boolean> = _favorite
+
+    init {
+        launch {
+            _movie.value = moviesRepository.findById(movieId)
+            updateUi()
+        }
     }
 
-    fun onFavoriteClicked() = launch {
-        _model.value?.movie?.let {
-            val updatedMovie = it.copy(favorite = !it.favorite)
-            _model.value = UiModel(updatedMovie)
-            moviesRepository.update(updatedMovie)
+    fun onFavoriteClicked() {
+        launch {
+            _movie.value?.let {
+                val updatedMovie = it.copy(favorite = !it.favorite)
+                _movie.value = updatedMovie
+                updateUi()
+                moviesRepository.update(updatedMovie)
+            }
+        }
+    }
+
+    private fun updateUi() {
+
+        _movie.value?.run {
+            _title.value = title
+            _overview.value = overview
+            _url.value = "https://image.tmdb.org/t/p/w780$backdropPath"
+            _favorite.value = favorite
         }
     }
 }
