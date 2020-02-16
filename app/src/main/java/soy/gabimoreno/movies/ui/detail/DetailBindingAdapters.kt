@@ -3,15 +3,7 @@ package soy.gabimoreno.movies.ui.detail
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.common.loadUrl
 import soy.gabimoreno.movies.model.db.Movie
-
-@BindingAdapter("url")
-fun ImageView.bindUrl(url: String?) {
-    url?.let {
-        loadUrl(url)
-    }
-}
 
 @BindingAdapter("movie")
 fun MovieDetailInfoView.updateMovieInfo(movie: Movie?) {

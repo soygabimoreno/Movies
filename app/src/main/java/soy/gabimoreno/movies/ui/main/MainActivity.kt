@@ -3,51 +3,57 @@ package soy.gabimoreno.movies.ui.main
 import android.Manifest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.databinding.DataBindingUtil
 import soy.gabimoreno.movies.PermissionRequester
 import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.common.*
-import soy.gabimoreno.movies.model.db.Movie
+import soy.gabimoreno.movies.common.app
+import soy.gabimoreno.movies.common.event.EventObserver
+import soy.gabimoreno.movies.common.getViewModel
+import soy.gabimoreno.movies.common.startActivity
+import soy.gabimoreno.movies.databinding.ActivityMainBinding
 import soy.gabimoreno.movies.model.server.MoviesRepository
 import soy.gabimoreno.movies.ui.detail.DetailActivity
-import soy.gabimoreno.movies.ui.main.MainViewModel.UiModel
-import soy.gabimoreno.movies.ui.main.MainViewModel.UiModel.Loading
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var vm: MainViewModel
+    private val vm: MainViewModel by lazy {
+        getViewModel {
+            MainViewModel(MoviesRepository(app))
+        }
+    }
     private lateinit var adapter: MoviesAdapter
     private val coarsePermissionRequester = PermissionRequester(this, Manifest.permission.ACCESS_COARSE_LOCATION)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        vm = getViewModel { MainViewModel(MoviesRepository(app)) }
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding.vm = vm
+        binding.lifecycleOwner = this
+
         adapter = MoviesAdapter(vm::onMovieClicked)
-        rv.adapter = adapter
+        binding.rv.adapter = adapter
 
-        vm.model.observe(this, Observer(::updateUi))
-        vm.navigation.observe(this, Observer(::navigate))
+        initNavigateToMovie()
+        initRequestLocationPermission()
     }
 
-    private fun navigate(event: Event<Movie>) {
-        event.getContentIfNotHandled()?.let {
-            val movie = it
-            startActivity<DetailActivity> {
-                val movieId = movie.id
-                putExtra(DetailActivity.MOVIE_ID, movieId)
-            }
-        }
+    private fun initRequestLocationPermission() {
+        vm.requestLocationPermission.observe(
+            this,
+            EventObserver {
+                coarsePermissionRequester.request {
+                    vm.onCoarsePermissionRequested()
+                }
+            })
     }
 
-    private fun updateUi(model: UiModel) {
-        pb.setVisibleOrGone(model == Loading)
-        when (model) {
-            is UiModel.Content -> adapter.movies = model.movies
-            UiModel.RequestLocationPermission -> coarsePermissionRequester.request {
-                vm.onCoarsePermissionRequested()
-            }
-        }
+    private fun initNavigateToMovie() {
+        vm.navigateToMovie.observe(
+            this,
+            EventObserver { movieId ->
+                startActivity<DetailActivity> {
+                    putExtra(DetailActivity.MOVIE_ID, movieId)
+                }
+            })
     }
 }

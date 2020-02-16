@@ -1,50 +1,35 @@
 package soy.gabimoreno.movies.ui.main
 
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_movie.view.*
 import soy.gabimoreno.movies.R
+import soy.gabimoreno.movies.common.basicDiffUtil
+import soy.gabimoreno.movies.common.bindingInflate
+import soy.gabimoreno.movies.databinding.ViewMovieBinding
 import soy.gabimoreno.movies.model.db.Movie
-import soy.gabimoreno.movies.common.inflate
-import soy.gabimoreno.movies.common.loadUrl
-import kotlin.properties.Delegates
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-    var movies: List<Movie> by Delegates.observable(emptyList()) { _, old, new ->
-        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                old[oldItemPosition].id == new[newItemPosition].id
-
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                old[oldItemPosition] == new[newItemPosition]
-
-            override fun getOldListSize(): Int = old.size
-
-            override fun getNewListSize(): Int = new.size
-        }).dispatchUpdatesTo(this)
-    }
+    var movies: List<Movie> by basicDiffUtil(
+        emptyList(),
+        areContentsTheSame = { old, new ->
+            old.id == new.id
+        })
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = parent.inflate(R.layout.view_movie, false)
-        return ViewHolder(view)
+        return ViewHolder(parent.bindingInflate(R.layout.view_movie, false))
     }
 
     override fun getItemCount(): Int = movies.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movies[position]
-        holder.bind(movie)
-        holder.itemView.setOnClickListener { listener(movie) }
-    }
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(movie: Movie) {
-            itemView.iv.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
-            itemView.tv.text = movie.title
+        holder.dataBinding.movie = movie
+        holder.itemView.setOnClickListener {
+            listener(movie)
         }
     }
+
+    class ViewHolder(val dataBinding: ViewMovieBinding) : RecyclerView.ViewHolder(dataBinding.root)
 }

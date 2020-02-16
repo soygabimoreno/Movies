@@ -9,20 +9,27 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import soy.gabimoreno.movies.App
-import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.model.db.Movie
-import soy.gabimoreno.movies.ui.detail.MovieDetailInfoView
+import kotlin.properties.Delegates
 
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+fun <T : ViewDataBinding> ViewGroup.bindingInflate(
+    @LayoutRes layoutRes: Int,
+    attachToRoot: Boolean = true
+): T =
+    DataBindingUtil.inflate(LayoutInflater.from(context), layoutRes, this, attachToRoot)
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
@@ -37,6 +44,25 @@ inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): In
 inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit) {
     startActivity(intentFor<T>(body))
 }
+
+inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffUtil(
+    initialValue: List<T>,
+    crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
+    crossinline areContentsTheSame: (T, T) -> Boolean = { old, new -> old == new }
+) =
+    Delegates.observable(initialValue) { _, old, new ->
+        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                areItemsTheSame(old[oldItemPosition], new[newItemPosition])
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                areContentsTheSame(old[oldItemPosition], new[newItemPosition])
+
+            override fun getOldListSize(): Int = old.size
+
+            override fun getNewListSize(): Int = new.size
+        }).dispatchUpdatesTo(this@basicDiffUtil)
+    }
 
 fun View.visible() {
     visibility = View.VISIBLE
