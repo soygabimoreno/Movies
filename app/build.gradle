@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
@@ -27,6 +28,10 @@ android {
 
     dataBinding {
         enabled true
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -62,4 +67,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
 }
