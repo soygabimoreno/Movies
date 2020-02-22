@@ -3,13 +3,13 @@ package soy.gabimoreno.movies.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.launch
-import soy.gabimoreno.movies.common.event.Event
 import soy.gabimoreno.movies.common.ScopedViewModel
-import soy.gabimoreno.movies.model.db.Movie
-import soy.gabimoreno.movies.model.server.MoviesRepository
+import soy.gabimoreno.movies.common.event.Event
+import soy.gabimoreno.movies.domain.Movie
+import soy.gabimoreno.movies.usecases.GetPopularMovies
 
 class MainViewModel(
-    private val moviesRepository: MoviesRepository
+    private val getPopularMovies: GetPopularMovies
 ) : ScopedViewModel() {
 
     private val _movies = MutableLiveData<List<Movie>>()
@@ -36,7 +36,7 @@ class MainViewModel(
     fun onCoarsePermissionRequested() {
         launch {
             _loading.value = true
-            _movies.value = moviesRepository.findPopularMovies()
+            _movies.value = getPopularMovies.invoke()
             _loading.value = false
         }
     }

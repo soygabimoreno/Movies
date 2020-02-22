@@ -15,14 +15,17 @@ import soy.gabimoreno.movies.common.app
 import soy.gabimoreno.movies.common.bindingInflate
 import soy.gabimoreno.movies.common.event.EventObserver
 import soy.gabimoreno.movies.common.getViewModel
+import soy.gabimoreno.movies.data.MoviesRepository
 import soy.gabimoreno.movies.databinding.FragmentMainBinding
-import soy.gabimoreno.movies.model.server.MoviesRepository
+import soy.gabimoreno.movies.model.db.RoomDataSource
+import soy.gabimoreno.movies.usecases.GetPopularMovies
 
 class MainFragment : Fragment() {
 
     private val vm: MainViewModel by lazy {
         getViewModel {
-            MainViewModel(MoviesRepository(app))
+            val localDataSource = RoomDataSource(app.db)
+            MainViewModel(GetPopularMovies(MoviesRepository(localDataSource)))
         }
     }
     private lateinit var adapter: MoviesAdapter

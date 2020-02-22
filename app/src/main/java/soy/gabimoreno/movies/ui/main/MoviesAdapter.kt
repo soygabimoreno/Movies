@@ -6,7 +6,7 @@ import soy.gabimoreno.movies.R
 import soy.gabimoreno.movies.common.basicDiffUtil
 import soy.gabimoreno.movies.common.bindingInflate
 import soy.gabimoreno.movies.databinding.ViewMovieBinding
-import soy.gabimoreno.movies.model.db.Movie
+import soy.gabimoreno.movies.domain.Movie
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
