@@ -10,15 +10,37 @@ import soy.gabimoreno.movies.R
 import soy.gabimoreno.movies.common.app
 import soy.gabimoreno.movies.common.bindingInflate
 import soy.gabimoreno.movies.common.getViewModel
+import soy.gabimoreno.movies.data.repository.MoviesRepository
+import soy.gabimoreno.movies.data.repository.RegionRepository
 import soy.gabimoreno.movies.databinding.FragmentDetailBinding
-import soy.gabimoreno.movies.model.server.MoviesRepository
+import soy.gabimoreno.movies.model.AndroidPermissionChecker
+import soy.gabimoreno.movies.model.PlayServicesLocationDataSource
+import soy.gabimoreno.movies.model.db.RoomDataSource
+import soy.gabimoreno.movies.model.server.MovieDbDataSource
+import soy.gabimoreno.movies.usecases.FindMovieById
+import soy.gabimoreno.movies.usecases.ToggleMovieFavorite
 
 class DetailFragment : Fragment() {
 
     private val vm: DetailViewModel by lazy {
         getViewModel {
             val movieId = args.movieId
-            DetailViewModel(movieId, MoviesRepository(app))
+
+            val moviesRepository = MoviesRepository(
+                RoomDataSource(app.db),
+                MovieDbDataSource(),
+                RegionRepository(
+                    PlayServicesLocationDataSource(app),
+                    AndroidPermissionChecker(app)
+                ),
+                app.getString(R.string.api_key)
+            )
+
+            DetailViewModel(
+                movieId,
+                FindMovieById(moviesRepository),
+                ToggleMovieFavorite(moviesRepository)
+            )
         }
     }
     private var binding: FragmentDetailBinding? = null

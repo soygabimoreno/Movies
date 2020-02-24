@@ -13,13 +13,13 @@ object MovieDb {
         OkHttpClient.Builder().addInterceptor(this).build()
     }
 
-    val service: TheMovieDbService = Retrofit.Builder()
+    val service: MovieDbService = Retrofit.Builder()
         .baseUrl("https://api.themoviedb.org/3/")
         .client(okHttpClient)
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .run {
-            create<TheMovieDbService>(TheMovieDbService::class.java)
+            create<MovieDbService>(MovieDbService::class.java)
         }
 }

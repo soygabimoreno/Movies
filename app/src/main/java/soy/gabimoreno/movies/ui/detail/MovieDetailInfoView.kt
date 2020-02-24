@@ -5,8 +5,7 @@ import android.util.AttributeSet
 import android.widget.TextView
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
-import soy.gabimoreno.movies.model.db.Movie
-import soy.gabimoreno.movies.model.server.ServerMovie
+import soy.gabimoreno.movies.domain.Movie
 
 class MovieDetailInfoView @JvmOverloads constructor(
     context: Context,

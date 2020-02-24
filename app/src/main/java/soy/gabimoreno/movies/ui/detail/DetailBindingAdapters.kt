@@ -3,7 +3,7 @@ package soy.gabimoreno.movies.ui.detail
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.model.db.Movie
+import soy.gabimoreno.movies.domain.Movie
 
 @BindingAdapter("movie")
 fun MovieDetailInfoView.updateMovieInfo(movie: Movie?) {

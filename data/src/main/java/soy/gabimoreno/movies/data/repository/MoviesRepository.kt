@@ -1,5 +1,7 @@
-package soy.gabimoreno.movies.data
+package soy.gabimoreno.movies.data.repository
 
+import soy.gabimoreno.movies.data.source.LocalDataSource
+import soy.gabimoreno.movies.data.source.RemoteDataSource
 import soy.gabimoreno.movies.domain.Movie
 
 class MoviesRepository(
@@ -9,21 +11,14 @@ class MoviesRepository(
     private val apiKey: String
 ) {
 
-    fun getPopularMovies(): List<Movie> {
+    suspend fun getPopularMovies(): List<Movie> {
         if (localDataSource.isEmpty()) {
             val movies = remoteDataSource.getPopularMovies(apiKey, regionRepository.findLastRegion())
             localDataSource.saveMovies(movies)
         }
         return localDataSource.getPopularMovies()
     }
-}
 
-interface LocalDataSource {
-    fun isEmpty(): Boolean
-    fun getPopularMovies(): List<Movie>
-    fun saveMovies(movies: List<Movie>)
-}
-
-interface RemoteDataSource {
-    fun getPopularMovies(apiKey: String, region: String): List<Movie>
+    suspend fun findById(id: Int) = localDataSource.findById(id)
+    suspend fun update(movie: Movie) = localDataSource.update(movie)
 }

@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import soy.gabimoreno.movies.model.server.MovieDbResult
 
-interface TheMovieDbService {
+interface MovieDbService {
 
     @GET("discover/movie?sort_by=popularity.desc")
     fun listPopularMoviesAsync(

@@ -2,7 +2,7 @@ package soy.gabimoreno.movies.ui.main
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import soy.gabimoreno.movies.model.db.Movie
+import soy.gabimoreno.movies.domain.Movie
 
 @BindingAdapter("items")
 fun RecyclerView.setItems(items: List<Movie>?) {

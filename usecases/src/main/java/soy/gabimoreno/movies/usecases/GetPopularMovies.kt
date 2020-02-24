@@ -1,11 +1,7 @@
 package soy.gabimoreno.movies.usecases
 
-import soy.gabimoreno.movies.data.MoviesRepository
-import soy.gabimoreno.movies.domain.Movie
+import soy.gabimoreno.movies.data.repository.MoviesRepository
 
-class GetPopularMovies(
-    private val moviesRepository: MoviesRepository
-) {
-
-    suspend fun invoke(): List<Movie> = moviesRepository.getPopularMovies()
+class GetPopularMovies(private val moviesRepository: MoviesRepository) {
+    suspend fun invoke() = moviesRepository.getPopularMovies()
 }

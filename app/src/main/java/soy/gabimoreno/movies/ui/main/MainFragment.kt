@@ -15,9 +15,13 @@ import soy.gabimoreno.movies.common.app
 import soy.gabimoreno.movies.common.bindingInflate
 import soy.gabimoreno.movies.common.event.EventObserver
 import soy.gabimoreno.movies.common.getViewModel
-import soy.gabimoreno.movies.data.MoviesRepository
+import soy.gabimoreno.movies.data.repository.MoviesRepository
+import soy.gabimoreno.movies.data.repository.RegionRepository
 import soy.gabimoreno.movies.databinding.FragmentMainBinding
+import soy.gabimoreno.movies.model.AndroidPermissionChecker
+import soy.gabimoreno.movies.model.PlayServicesLocationDataSource
 import soy.gabimoreno.movies.model.db.RoomDataSource
+import soy.gabimoreno.movies.model.server.MovieDbDataSource
 import soy.gabimoreno.movies.usecases.GetPopularMovies
 
 class MainFragment : Fragment() {
@@ -25,7 +29,19 @@ class MainFragment : Fragment() {
     private val vm: MainViewModel by lazy {
         getViewModel {
             val localDataSource = RoomDataSource(app.db)
-            MainViewModel(GetPopularMovies(MoviesRepository(localDataSource)))
+            MainViewModel(
+                GetPopularMovies(
+                    MoviesRepository(
+                        localDataSource,
+                        MovieDbDataSource(),
+                        RegionRepository(
+                            PlayServicesLocationDataSource(app),
+                            AndroidPermissionChecker(app)
+                        ),
+                        app.getString(R.string.api_key)
+                    )
+                )
+            )
         }
     }
     private lateinit var adapter: MoviesAdapter

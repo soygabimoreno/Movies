@@ -1,33 +1,32 @@
 package soy.gabimoreno.movies.model
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.app.Application
+import android.location.Geocoder
 import android.location.Location
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.suspendCancellableCoroutine
+import soy.gabimoreno.movies.data.source.LocationDataSource
 import kotlin.coroutines.resume
-
-interface LocationDataSource {
-    suspend fun findLastLocation(): Location?
-}
 
 class PlayServicesLocationDataSource(application: Application) : LocationDataSource {
 
+    private val geocoder = Geocoder(application)
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
-    override suspend fun findLastLocation(): Location? {
-        return suspendCancellableCoroutine { continuation ->
+    @SuppressLint("MissingPermission")
+    override suspend fun findLastRegion(): String? =
+        suspendCancellableCoroutine { continuation ->
             fusedLocationClient.lastLocation
                 .addOnCompleteListener {
-                    continuation.resume(it.result)
+                    continuation.resume(it.result.toRegion())
                 }
         }
-    }
-}
 
-class NotAvailableLocationDataSource : LocationDataSource {
-
-    override suspend fun findLastLocation(): Location? {
-        throw UnsupportedOperationException("This operation cannot be done in this device")
+    private fun Location?.toRegion(): String? {
+        val addresses = this?.let {
+            geocoder.getFromLocation(latitude, longitude, 1)
+        }
+        return addresses?.firstOrNull()?.countryCode
     }
 }
