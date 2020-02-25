@@ -44,6 +44,7 @@ class MainFragment : Fragment() {
             )
         }
     }
+
     private lateinit var adapter: MoviesAdapter
     private val coarsePermissionRequester by lazy {
         activity?.let {
