@@ -28,20 +28,21 @@ class MainFragment : Fragment() {
 
     private val vm: MainViewModel by lazy {
         getViewModel {
-            val localDataSource = RoomDataSource(app.db)
-            MainViewModel(
-                GetPopularMovies(
-                    MoviesRepository(
-                        localDataSource,
-                        MovieDbDataSource(),
-                        RegionRepository(
-                            PlayServicesLocationDataSource(app),
-                            AndroidPermissionChecker(app)
-                        ),
-                        app.getString(R.string.api_key)
-                    )
-                )
-            )
+            app.component.mainViewModel
+//            val localDataSource = RoomDataSource(app.db)
+//            MainViewModel(
+//                GetPopularMovies(
+//                    MoviesRepository(
+//                        localDataSource,
+//                        MovieDbDataSource(),
+//                        RegionRepository(
+//                            PlayServicesLocationDataSource(app),
+//                            AndroidPermissionChecker(app)
+//                        ),
+//                        app.getString(R.string.api_key)
+//                    )
+//                )
+//            )
         }
     }
 
