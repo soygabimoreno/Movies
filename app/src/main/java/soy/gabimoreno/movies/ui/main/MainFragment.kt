@@ -15,37 +15,19 @@ import soy.gabimoreno.movies.common.app
 import soy.gabimoreno.movies.common.bindingInflate
 import soy.gabimoreno.movies.common.event.EventObserver
 import soy.gabimoreno.movies.common.getViewModel
-import soy.gabimoreno.movies.data.repository.MoviesRepository
-import soy.gabimoreno.movies.data.repository.RegionRepository
 import soy.gabimoreno.movies.databinding.FragmentMainBinding
-import soy.gabimoreno.movies.model.AndroidPermissionChecker
-import soy.gabimoreno.movies.model.PlayServicesLocationDataSource
-import soy.gabimoreno.movies.model.db.RoomDataSource
-import soy.gabimoreno.movies.model.server.MovieDbDataSource
-import soy.gabimoreno.movies.usecases.GetPopularMovies
+import soy.gabimoreno.movies.di.main.MainFragmentComponent
+import soy.gabimoreno.movies.di.main.MainFragmentModule
 
 class MainFragment : Fragment() {
 
     private val vm: MainViewModel by lazy {
         getViewModel {
-            app.component.mainViewModel
-//            val localDataSource = RoomDataSource(app.db)
-//            MainViewModel(
-//                GetPopularMovies(
-//                    MoviesRepository(
-//                        localDataSource,
-//                        MovieDbDataSource(),
-//                        RegionRepository(
-//                            PlayServicesLocationDataSource(app),
-//                            AndroidPermissionChecker(app)
-//                        ),
-//                        app.getString(R.string.api_key)
-//                    )
-//                )
-//            )
+            component.mainViewModel
         }
     }
 
+    private lateinit var component: MainFragmentComponent
     private lateinit var adapter: MoviesAdapter
     private val coarsePermissionRequester by lazy {
         activity?.let {
@@ -57,6 +39,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = container?.bindingInflate(R.layout.fragment_main, false)
+        component = app.component.plus(MainFragmentModule())
         return binding?.root
     }
 

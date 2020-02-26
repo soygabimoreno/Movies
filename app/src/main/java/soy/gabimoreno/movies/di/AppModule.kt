@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.di.module
+package soy.gabimoreno.movies.di
 
 import android.app.Application
 import androidx.room.Room

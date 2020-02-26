@@ -2,13 +2,13 @@ package soy.gabimoreno.movies
 
 import android.app.Application
 import androidx.room.Room
-import soy.gabimoreno.movies.di.DaggerMyMoviesComponent
-import soy.gabimoreno.movies.di.MyMoviesComponent
+import soy.gabimoreno.movies.di.DaggerMoviesComponent
+import soy.gabimoreno.movies.di.MoviesComponent
 import soy.gabimoreno.movies.model.db.MovieDatabase
 
 class App : Application() {
 
-    lateinit var component: MyMoviesComponent
+    lateinit var component: MoviesComponent
         private set
 
     lateinit var db: MovieDatabase
@@ -22,7 +22,7 @@ class App : Application() {
             MovieDatabase::class.java, "movie-db"
         ).build()
 
-        component = DaggerMyMoviesComponent
+        component = DaggerMoviesComponent
             .factory()
             .create(this)
     }

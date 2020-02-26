@@ -1,4 +1,4 @@
-package soy.gabimoreno.movies.di.module
+package soy.gabimoreno.movies.di
 
 import dagger.Module
 import dagger.Provides
