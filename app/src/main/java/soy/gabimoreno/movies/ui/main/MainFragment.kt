@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import org.koin.android.scope.currentScope
+import org.koin.android.viewmodel.ext.android.viewModel
 import soy.gabimoreno.movies.PermissionRequester
 import soy.gabimoreno.movies.R
 import soy.gabimoreno.movies.common.app
