@@ -4,7 +4,6 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -13,7 +12,7 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import soy.gabimoreno.movies.data.source.LocalDataSource
 import soy.gabimoreno.movies.data.source.RemoteDataSource
-import soy.gabimoreno.movies.domain.Movie
+import soy.gabimoreno.movies.testshared.mockedMovie
 
 @RunWith(MockitoJUnitRunner::class)
 class MoviesRepositoryTest {
@@ -31,22 +30,7 @@ class MoviesRepositoryTest {
 
     private val apiKey = "1a2b3c4d"
 
-    private val mockedMovie = Movie(
-        0,
-        "Title",
-        "Overview",
-        "01/01/2025",
-        "",
-        "",
-        "EN",
-        "Title",
-        5.0,
-        5.1,
-        false
-    )
-
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         moviesRepository = MoviesRepository(
             localDataSource,

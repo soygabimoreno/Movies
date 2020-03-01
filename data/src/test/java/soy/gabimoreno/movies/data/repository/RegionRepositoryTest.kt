@@ -41,4 +41,17 @@ class RegionRepositoryTest {
             assertEquals(defaultRegion, result)
         }
     }
+
+    @Test
+    fun `returns region from location data source when coarse permission granted`() {
+        runBlocking {
+            val region = "ES"
+            whenever(permissionChecker.check(PermissionChecker.Permission.COARSE_LOCATION)).thenReturn(true)
+            whenever(regionRepository.findLastRegion()).thenReturn(region)
+
+            val result = regionRepository.findLastRegion()
+
+            assertEquals(region, result)
+        }
+    }
 }

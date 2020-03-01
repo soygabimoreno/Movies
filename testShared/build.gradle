@@ -3,9 +3,6 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation project(":domain")
-    implementation project(":testShared")
-    implementation project(":data")
 
     implementation kotlinLibs.values()
-    testImplementation testLibs.values()
 }
