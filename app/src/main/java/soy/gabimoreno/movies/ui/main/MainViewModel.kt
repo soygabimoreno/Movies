@@ -2,6 +2,7 @@ package soy.gabimoreno.movies.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import soy.gabimoreno.movies.common.ScopedViewModel
 import soy.gabimoreno.movies.common.event.Event
@@ -9,8 +10,9 @@ import soy.gabimoreno.movies.domain.Movie
 import soy.gabimoreno.movies.usecases.GetPopularMovies
 
 class MainViewModel(
-    private val getPopularMovies: GetPopularMovies
-) : ScopedViewModel() {
+    private val getPopularMovies: GetPopularMovies,
+    uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> = _movies

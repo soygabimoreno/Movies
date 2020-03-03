@@ -2,6 +2,7 @@ package soy.gabimoreno.movies.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import soy.gabimoreno.movies.common.ScopedViewModel
 import soy.gabimoreno.movies.domain.Movie
@@ -11,8 +12,9 @@ import soy.gabimoreno.movies.usecases.ToggleMovieFavorite
 class DetailViewModel(
     private val movieId: Int,
     private val findMovieById: FindMovieById,
-    private val toggleMovieFavorite: ToggleMovieFavorite
-) : ScopedViewModel() {
+    private val toggleMovieFavorite: ToggleMovieFavorite,
+    uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _movie = MutableLiveData<Movie>()
     val dbMovie: LiveData<Movie> = _movie

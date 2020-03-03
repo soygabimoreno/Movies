@@ -2,6 +2,7 @@ package soy.gabimoreno.movies.di.detail
 
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
 import soy.gabimoreno.movies.data.repository.MoviesRepository
 import soy.gabimoreno.movies.ui.detail.DetailViewModel
 import soy.gabimoreno.movies.ui.main.MainViewModel
@@ -15,11 +16,13 @@ class DetailFragmentModule(private val movieId: Int) {
     @Provides
     fun detailViewModelProvider(
         findMovieById: FindMovieById,
-        toggleMovieFavorite: ToggleMovieFavorite
+        toggleMovieFavorite: ToggleMovieFavorite,
+        uiDispatcher: CoroutineDispatcher
     ) = DetailViewModel(
         movieId,
         findMovieById,
-        toggleMovieFavorite
+        toggleMovieFavorite,
+        uiDispatcher
     )
 
     @Provides

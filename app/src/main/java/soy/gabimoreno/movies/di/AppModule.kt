@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import soy.gabimoreno.movies.R
 import soy.gabimoreno.movies.data.PermissionChecker
 import soy.gabimoreno.movies.data.source.LocalDataSource
@@ -43,5 +45,8 @@ class AppModule {
     fun locationDataSourceProvider(app: Application): LocationDataSource = PlayServicesLocationDataSource(app)
 
     @Provides
-    fun permissionChecker(app: Application): PermissionChecker = AndroidPermissionChecker(app)
+    fun permissionCheckerProvider(app: Application): PermissionChecker = AndroidPermissionChecker(app)
+
+    @Provides
+    fun uiDispatcherProvider(): CoroutineDispatcher = Dispatchers.Main
 }
