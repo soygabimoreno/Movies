@@ -76,7 +76,7 @@
                     android:lineSpacingMultiplier="1.5"
                     android:padding="16dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:movie="@{vm.dbMovie}"
+                    app:movie="@{vm.movie}"
                     tools:text="Lorem ipsum"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

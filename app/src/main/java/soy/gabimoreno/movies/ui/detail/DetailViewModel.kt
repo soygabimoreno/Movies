@@ -17,7 +17,7 @@ class DetailViewModel(
 ) : ScopedViewModel(uiDispatcher) {
 
     private val _movie = MutableLiveData<Movie>()
-    val dbMovie: LiveData<Movie> = _movie
+    val movie: LiveData<Movie> = _movie
 
     private val _title = MutableLiveData<String>()
     val title: LiveData<String> = _title
