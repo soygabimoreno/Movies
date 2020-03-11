@@ -4,10 +4,10 @@ import soy.gabimoreno.movies.data.source.RemoteDataSource
 import soy.gabimoreno.movies.domain.Movie
 import soy.gabimoreno.movies.model.toMovie
 
-class MovieDbDataSource : RemoteDataSource {
+class MovieDbDataSource(private val movieDb: MovieDb) : RemoteDataSource {
 
     override suspend fun getPopularMovies(apiKey: String, region: String): List<Movie> {
-        return MovieDb.service
+        return movieDb.service
             .listPopularMoviesAsync(apiKey, region).await()
             .results
             .map {

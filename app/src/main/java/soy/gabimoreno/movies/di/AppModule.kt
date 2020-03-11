@@ -16,6 +16,7 @@ import soy.gabimoreno.movies.model.AndroidPermissionChecker
 import soy.gabimoreno.movies.model.PlayServicesLocationDataSource
 import soy.gabimoreno.movies.model.db.MovieDatabase
 import soy.gabimoreno.movies.model.db.RoomDataSource
+import soy.gabimoreno.movies.model.server.MovieDb
 import soy.gabimoreno.movies.model.server.MovieDbDataSource
 import javax.inject.Named
 import javax.inject.Singleton
@@ -36,10 +37,14 @@ class AppModule {
     ).build()
 
     @Provides
+    @Singleton
+    fun movieDbProvider(): MovieDb = MovieDb(Keys.BASE_URL_VALUE)
+
+    @Provides
     fun localDataSourceProvider(db: MovieDatabase): LocalDataSource = RoomDataSource(db)
 
     @Provides
-    fun remoteDataSourceProvider(): RemoteDataSource = MovieDbDataSource()
+    fun remoteDataSourceProvider(movieDb: MovieDb): RemoteDataSource = MovieDbDataSource(movieDb)
 
     @Provides
     fun locationDataSourceProvider(app: Application): LocationDataSource = PlayServicesLocationDataSource(app)

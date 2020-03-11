@@ -21,6 +21,7 @@ import soy.gabimoreno.movies.model.AndroidPermissionChecker
 import soy.gabimoreno.movies.model.PlayServicesLocationDataSource
 import soy.gabimoreno.movies.model.db.MovieDatabase
 import soy.gabimoreno.movies.model.db.RoomDataSource
+import soy.gabimoreno.movies.model.server.MovieDb
 import soy.gabimoreno.movies.model.server.MovieDbDataSource
 import soy.gabimoreno.movies.ui.detail.DetailFragment
 import soy.gabimoreno.movies.ui.detail.DetailViewModel
@@ -46,10 +47,12 @@ private val appModule = module {
         MovieDatabase.build(get())
     }
     factory<LocalDataSource> { RoomDataSource(get()) }
-    factory<RemoteDataSource> { MovieDbDataSource() }
+    factory<RemoteDataSource> { MovieDbDataSource(get()) }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
+    single(named(Keys.BASE_URL)) { Keys.BASE_URL_VALUE }
+    single { MovieDb(get(named(Keys.BASE_URL))) }
 }
 
 val dataModule = module {
