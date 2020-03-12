@@ -21,10 +21,10 @@ fun initMockedDi(vararg modules: Module) {
 
 private val mockedAppModule = module {
     single(named(Keys.API_KEY)) { "123456" }
-    factory<LocalDataSource> { FakeLocalDataSource() }
-    factory<RemoteDataSource> { FakeRemoteDataSource() }
-    factory<LocationDataSource> { FakeLocationDataSource() }
-    factory<PermissionChecker> { FakePermissionChecker() }
+    single<LocalDataSource> { FakeLocalDataSource() }
+    single<RemoteDataSource> { FakeRemoteDataSource() }
+    single<LocationDataSource> { FakeLocationDataSource() }
+    single<PermissionChecker> { FakePermissionChecker() }
     single { Dispatchers.Unconfined }
 }
 

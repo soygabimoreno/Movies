@@ -25,5 +25,6 @@ class App : Application() {
         component = DaggerMoviesComponent
             .factory()
             .create(this)
+        initDI()
     }
 }
