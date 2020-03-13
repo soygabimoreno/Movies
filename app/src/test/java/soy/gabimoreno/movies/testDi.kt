@@ -66,5 +66,6 @@ class FakeLocationDataSource : LocationDataSource {
 }
 
 class FakePermissionChecker : PermissionChecker {
-    override suspend fun check(permission: PermissionChecker.Permission) = true
+    var permissionGranted = true
+    override suspend fun check(permission: PermissionChecker.Permission) = permissionGranted
 }

@@ -20,7 +20,7 @@ import org.koin.test.get
 import soy.gabimoreno.movies.model.server.MovieDb
 import soy.gabimoreno.movies.ui.NavHostActivity
 
-class UITest : KoinTest {
+class UiTest : KoinTest {
 
     @get:Rule
     val mockWebServerRule = MockWebServerRule()
@@ -59,14 +59,6 @@ class UITest : KoinTest {
             )
 
         onView(withId(R.id.tb))
-            .check(
-                matches(
-                    hasDescendant(
-                        withText(
-                            "Spider-Man: Far from Home"
-                        )
-                    )
-                )
-            )
+            .check(matches(hasDescendant(withText("Spider-Man: Far from Home"))))
     }
 }
