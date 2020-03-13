@@ -13,23 +13,14 @@ import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.ext.android.viewModel
 import soy.gabimoreno.movies.PermissionRequester
 import soy.gabimoreno.movies.R
-import soy.gabimoreno.movies.common.app
 import soy.gabimoreno.movies.common.bindingInflate
 import soy.gabimoreno.movies.common.event.EventObserver
-import soy.gabimoreno.movies.common.getViewModel
 import soy.gabimoreno.movies.databinding.FragmentMainBinding
-import soy.gabimoreno.movies.di.main.MainFragmentComponent
-import soy.gabimoreno.movies.di.main.MainFragmentModule
 
 class MainFragment : Fragment() {
 
-    private val vm: MainViewModel by lazy {
-        getViewModel {
-            component.mainViewModel
-        }
-    }
+    private val vm: MainViewModel by currentScope.viewModel(this)
 
-    private lateinit var component: MainFragmentComponent
     private lateinit var adapter: MoviesAdapter
     private val coarsePermissionRequester by lazy {
         activity?.let {
@@ -41,7 +32,6 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = container?.bindingInflate(R.layout.fragment_main, false)
-        component = app.component.plus(MainFragmentModule())
         return binding?.root
     }
 
