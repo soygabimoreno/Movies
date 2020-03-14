@@ -20,6 +20,8 @@ import soy.gabimoreno.movies.usecases.GetPopularMovies
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
 
+    // Foo
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
