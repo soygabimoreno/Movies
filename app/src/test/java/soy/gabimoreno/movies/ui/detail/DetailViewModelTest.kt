@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,6 +50,7 @@ class DetailViewModelTest {
         )
     }
 
+    @Ignore
     @Test
     fun `Observing LiveData finds the movie`() {
         runBlocking {
@@ -62,6 +64,7 @@ class DetailViewModelTest {
         }
     }
 
+    @Ignore
     @Test
     fun `When favorite clicked, the toggleMovieFavorite use case is invoked`() {
         runBlocking {
