@@ -71,8 +71,6 @@ class DetailViewModelTest {
             val id = 1
             val movie = mockedMovie.copy(id = id)
 
-            // Comment for check UI tests
-
             whenever(findMovieById.invoke(id)).thenReturn(movie)
             whenever(toggleMovieFavorite.invoke(movie)).thenReturn(movie.copy(favorite = !movie.favorite))
             vm.movie.observeForever(movieObserver)
