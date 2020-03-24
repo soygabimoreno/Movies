@@ -59,6 +59,6 @@ class UiTest : KoinTest {
             )
 
         onView(withId(R.id.tb))
-            .check(matches(hasDescendant(withText("Spidedgr-Man: Far from Home"))))
+            .check(matches(hasDescendant(withText("Spider-Man: Far from Home"))))
     }
 }
