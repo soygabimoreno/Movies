@@ -7,6 +7,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
@@ -58,7 +59,7 @@ class UiTest : KoinTest {
                 )
             )
 
-        onView(withId(R.id.tb))
+        onView(withId(R.id.tb)).inRoot(RootMatchers.DEFAULT)
             .check(matches(hasDescendant(withText("Spider-Man: Far from Home"))))
     }
 }
