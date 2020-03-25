@@ -51,8 +51,6 @@ class UiTest : KoinTest {
     fun clickAMovieNavigatesToDetail() {
         activityTestRule.launchActivity(null)
 
-        Thread.sleep(500)
-
         onView(withId(R.id.rv))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
