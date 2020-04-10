@@ -30,9 +30,10 @@ class UiTest : KoinTest {
     val activityTestRule = ActivityTestRule(NavHostActivity::class.java, false, false)
 
     @get:Rule
-    val grantPermissionRule = GrantPermissionRule.grant(
-        "android.permission.ACCESS_COARSE_LOCATION"
-    )
+    val grantPermissionRule : GrantPermissionRule =
+        GrantPermissionRule.grant(
+            "android.permission.ACCESS_COARSE_LOCATION"
+        )
 
     @Before
     fun setUp() {

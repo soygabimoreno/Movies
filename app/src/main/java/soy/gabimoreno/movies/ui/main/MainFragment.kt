@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import org.koin.android.scope.currentScope
@@ -16,6 +17,7 @@ import soy.gabimoreno.movies.R
 import soy.gabimoreno.movies.common.bindingInflate
 import soy.gabimoreno.movies.common.event.EventObserver
 import soy.gabimoreno.movies.databinding.FragmentMainBinding
+import soy.gabimoreno.movies.domain.Movie
 
 class MainFragment : Fragment() {
 
@@ -41,12 +43,18 @@ class MainFragment : Fragment() {
 
         initNavigateToMovie()
         initRequestLocationPermission()
-
+        vm.movies.observe(this,Observer(::updateUi))
         adapter = MoviesAdapter(vm::onMovieClicked)
         binding?.apply {
             vm = this@MainFragment.vm
             lifecycleOwner = this@MainFragment
             rv.adapter = adapter
+        }
+    }
+
+    private fun updateUi(list: List<Movie>?) {
+        list?.let {
+            adapter.movies = it
         }
     }
 
