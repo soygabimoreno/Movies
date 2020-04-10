@@ -43,18 +43,11 @@ class MainFragment : Fragment() {
 
         initNavigateToMovie()
         initRequestLocationPermission()
-        vm.movies.observe(this,Observer(::updateUi))
         adapter = MoviesAdapter(vm::onMovieClicked)
         binding?.apply {
             vm = this@MainFragment.vm
             lifecycleOwner = this@MainFragment
             rv.adapter = adapter
-        }
-    }
-
-    private fun updateUi(list: List<Movie>?) {
-        list?.let {
-            adapter.movies = it
         }
     }
 
