@@ -38,7 +38,6 @@ class UiTest : KoinTest {
     fun setUp() {
         mockWebServerRule.server.enqueue(
             MockResponse().fromJson(
-                ApplicationProvider.getApplicationContext(),
                 "popularmovies.json"
             )
         )

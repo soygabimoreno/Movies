@@ -1,26 +1,25 @@
 package soy.gabimoreno.movies
 
 import android.content.Context
+import androidx.test.platform.app.InstrumentationRegistry
 import okhttp3.mockwebserver.MockResponse
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets.UTF_8
 
-fun MockResponse.fromJson(context: Context, jsonFile: String): MockResponse =
-    setBody(readJsonFile(context, jsonFile))
+fun MockResponse.fromJson(jsonFile: String): MockResponse =
+    setBody(readJsonFile(jsonFile))
 
 private
-fun readJsonFile(context: Context, jsonFilePath: String): String {
-    val res = context.packageManager.getResourcesForApplication("soy.gabimoreno.movies.test")
+fun readJsonFile(jsonFilePath: String): String {
 
     var br: BufferedReader? = null
 
     try {
         br = BufferedReader(
             InputStreamReader(
-                res.assets.open(
-                    jsonFilePath
-                ), UTF_8
+                InstrumentationRegistry.getInstrumentation().context.assets.open(jsonFilePath)
+                , UTF_8
             )
         )
         var line: String?
