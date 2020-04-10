@@ -62,4 +62,19 @@ class UiTest : KoinTest {
         onView(withId(R.id.tb))
             .check(matches(hasDescendant(withText("Spider-Man: Far from Home"))))
     }
+    @Test
+    fun clickAMovieNavigatesToDetailFail() {
+        activityTestRule.launchActivity(null)
+
+        onView(withId(R.id.rv))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    4,
+                    click()
+                )
+            )
+
+        onView(withId(R.id.tb))
+            .check(matches(hasDescendant(withText("The Lion King"))))
+    }
 }
