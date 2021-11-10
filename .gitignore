@@ -87,3 +87,6 @@ lint/tmp/
 /.idea/encodings.xml
 /.idea/misc.xml
 /.idea/runConfigurations.xml
+/.idea/.gitignore
+/.idea/compiler.xml
+/.idea/jarRepositories.xml

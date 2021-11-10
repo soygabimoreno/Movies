@@ -72,7 +72,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
 
-    implementation "org.koin:koin-android-viewmodel:2.0.1"
+    implementation "io.insert-koin:koin-android-viewmodel:2.0.1"
 
     implementation kotlinLibs.values()
     testImplementation testLibs.values()
